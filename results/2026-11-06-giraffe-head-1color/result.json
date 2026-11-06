@@ -1,0 +1,69 @@
+[
+ {
+  "file": "inbox/2026-11-06-giraffe-head-1color/giraffe_head_1color_infill10_bambu.3mf",
+  "exit": 0,
+  "seconds": 9,
+  "sliced_3mf": true,
+  "gcode_files": [
+   "Metadata/plate_1.gcode"
+  ],
+  "gcode_settings": {
+   "printer_model": "Bambu Lab P1S",
+   "nozzle_diameter": "0.4",
+   "layer_height": "0.2",
+   "elefant_foot_compensation": "0.15",
+   "enable_support": "0",
+   "support_on_build_plate_only": "0",
+   "support_type": "tree(auto)",
+   "filament_colour": "#F3DC8C;#FFFFFF;#0086D6",
+   "filament_settings_id": "\"Bambu PLA Basic @BBL P1S 0.4 nozzle\";\"Bambu PLA Basic @BBL P1S 0.4 nozzle\";\"Bambu PLA Basic @BBL P1S 0.4 nozzle\"",
+   "curr_bed_type": "High Temp Plate"
+  },
+  "stats": {
+   "model_s": 1694,
+   "total_s": 2069,
+   "filament_g": 13.96,
+   "filament_mm": 4605.9
+  },
+  "features": {
+   "start": {
+    "mm": 135308,
+    "moves": 68227,
+    "s": 948
+   },
+   "travel": {
+    "mm": 38940,
+    "moves": 10773,
+    "s": 126
+   }
+  },
+  "project_settings": {
+   "printer_model": "Bambu Lab P1S",
+   "nozzle_diameter": "0.4",
+   "layer_height": "0.2",
+   "elefant_foot_compensation": "0.15",
+   "enable_support": "0",
+   "support_on_build_plate_only": "0",
+   "support_type": "tree(auto)",
+   "filament_colour": "#F3DC8C;#FFFFFF;#0086D6",
+   "filament_settings_id": "Bambu PLA Basic @BBL P1S 0.4 nozzle;Bambu PLA Basic @BBL P1S 0.4 nozzle;Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "curr_bed_type": "High Temp Plate"
+  },
+  "settings_match": {
+   "printer_model": true,
+   "nozzle_diameter": true,
+   "layer_height": true,
+   "elefant_foot_compensation": true,
+   "enable_support": true,
+   "support_on_build_plate_only": true,
+   "support_type": true,
+   "filament_colour": true,
+   "filament_settings_id": true,
+   "curr_bed_type": true
+  },
+  "tool_changes": [],
+  "swap_check": null,
+  "warn_lines": [],
+  "ok": true
+ }
+]

@@ -1,0 +1,13 @@
+# josseng-garage.pages.dev 열림 확인(수동). 배포는 3mf-maker share/tripo-figure-skill/deploy_cf.py(Cloudflare API, _worker.js)
+name: pages-check
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for u in https://josseng-garage.pages.dev/tripo-figure-print/SKILL.md https://josseng-garage.pages.dev/tripo-figure-print/ https://josseng-garage.pages.dev/; do
+            echo "== $u"; curl -sS -L -o /tmp/b -w "%{http_code} %{content_type}\n" "$u"; head -c 300 /tmp/b; echo
+          done

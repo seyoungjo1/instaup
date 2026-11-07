@@ -7,5 +7,5 @@
 - 게시글 자료(본문·스크립트·원본·기록)는 비공개 저장소 3mf-maker 의 `instagram/` 에만 둡니다.
 
 ## site/ — josseng-garage.pages.dev (지우지 않음)
-- 공유용 공개 페이지. `site/` 에 올리면 Actions(`.github/workflows/pages.yml`, wrangler)가 Cloudflare Pages 프로젝트 josseng-garage 로 배포합니다. 저장소 Secrets: `CLOUDFLARE_API_TOKEN`(Pages Edit)·`CLOUDFLARE_ACCOUNT_ID`.
+- 공유용 공개 페이지(Cloudflare Pages 프로젝트 josseng-garage). `site/` 는 원본 보관, 배포는 3mf-maker `share/tripo-figure-skill/deploy_cf.py`(Cloudflare API 로 `_worker.js` 배포). 열림 확인은 Actions `pages-check`(수동).
 - `site/tripo-figure-print/SKILL.md` — 사진으로 Tripo 피규어를 만들고 출력용으로 분할하는 Claude 스킬(코드 포함).

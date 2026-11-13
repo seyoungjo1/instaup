@@ -1,0 +1,38 @@
+name: orca-probe
+# Snapmaker Orca(리눅스 AppImage) 안의 U1 프로필·명령줄 사용법 확인(수동·inbox 없이). 결과를 results/orca-probe/ 에 커밋.
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v4
+      - name: 의존
+        run: |
+          sudo -E apt-get update -q
+          sudo -E apt-get install -y -q --no-install-recommends xvfb libfuse2t64 libgl1 libegl1 libglu1-mesa libosmesa6 libgtk-3-0t64 libwebkit2gtk-4.1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 libsecret-1-0 || true
+      - name: 받기·살펴보기
+        run: |
+          set +e; mkdir -p results/orca-probe o; R=results/orca-probe
+          gh api repos/Snapmaker/OrcaSlicer/releases --jq '.[0:4][] | {tag_name, published_at, prerelease, assets: [.assets[].name]}' > $R/releases.json
+          url=$(gh api repos/Snapmaker/OrcaSlicer/releases --jq '[.[] | select(.assets[].name | test("AppImage$"))][0].assets[] | select(.name | test("AppImage$")) | .browser_download_url' | head -1)
+          echo "$url" > $R/appimage_url.txt
+          curl -sSL -o o/orca.AppImage "$url"; chmod +x o/orca.AppImage; (cd o && ./orca.AppImage --appimage-extract >/dev/null)
+          ls o/squashfs-root > $R/root_ls.txt; ls o/squashfs-root/bin o/squashfs-root/usr/bin 2>/dev/null >> $R/root_ls.txt
+          find o/squashfs-root -path '*profiles/Snapmaker*' -maxdepth 6 | head -50 > $R/snapmaker_profiles_dirs.txt
+          find o/squashfs-root -ipath '*profiles/Snapmaker*' -iname '*U1*' | head -200 > $R/u1_files.txt
+          cp o/squashfs-root/resources/profiles/Snapmaker.json $R/ 2>/dev/null
+          for f in $(find o/squashfs-root -ipath '*profiles/Snapmaker/machine*' -iname '*U1*' | head -3); do cp "$f" "$R/"; done
+          for f in $(find o/squashfs-root -ipath '*profiles/Snapmaker/process*' -iname '*U1*' | head -3); do cp "$f" "$R/"; done
+          ls o/squashfs-root/AppRun >/dev/null && (xvfb-run -a o/squashfs-root/AppRun --help > $R/cli_help.txt 2>&1; echo "exit $?" >> $R/cli_help.txt)
+          du -sh o/squashfs-root > $R/size.txt
+      - name: 커밋
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results; git diff --cached --quiet || (git commit -m 'orca-probe: 결과' && git pull --rebase && git push)
